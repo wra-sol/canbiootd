@@ -1,0 +1,16 @@
+node_modules/
+.DS_Store
+*.log
+.env
+.env.*
+pipeline/data/
+pipeline/dist/
+app/node_modules/
+app/.expo/
+app/dist/
+app/ios/
+app/android/
+*.sqlite
+*.sqlite-journal
+*.sqlite.gz
+.clipboard

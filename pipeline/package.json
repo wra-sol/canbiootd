@@ -1,0 +1,24 @@
+{
+  "name": "canbiootd-pipeline",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "index": "tsx src/indexer.ts",
+    "fetch": "tsx src/fetcher.ts",
+    "parse": "tsx src/parser.ts",
+    "build-db": "tsx src/build-db.ts",
+    "all": "tsx src/indexer.ts && tsx src/fetcher.ts && tsx src/parser.ts && tsx src/build-db.ts",
+    "sample": "tsx src/sample.ts"
+  },
+  "dependencies": {
+    "cheerio": "^1.0.0",
+    "sql.js": "^1.12.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.10",
+    "@types/sql.js": "^1.4.9",
+    "tsx": "^4.19.3",
+    "typescript": "^5.8.2"
+  }
+}

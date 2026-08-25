@@ -1,0 +1,15 @@
+{
+  "name": "canbiootd",
+  "private": true,
+  "scripts": {
+    "pipeline:sample": "npm run sample --prefix pipeline",
+    "pipeline:all": "npm run all --prefix pipeline",
+    "pipeline:index": "npm run index --prefix pipeline",
+    "pipeline:fetch": "npm run fetch --prefix pipeline",
+    "pipeline:parse": "npm run parse --prefix pipeline",
+    "pipeline:build-db": "npm run build-db --prefix pipeline",
+    "app": "npm start --prefix app",
+    "app:web": "npm run web --prefix app",
+    "typecheck": "npx tsc --noEmit --prefix app"
+  }
+}
