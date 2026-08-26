@@ -63,6 +63,7 @@ const translations = {
       loading: 'Loading…',
       error: 'Something went wrong.',
       retry: 'Try again',
+      preparing: 'Preparing your library…',
     },
   },
   fr: {
@@ -126,6 +127,7 @@ const translations = {
       loading: 'Chargement…',
       error: 'Une erreur s’est produite.',
       retry: 'Réessayer',
+      preparing: 'Préparation de votre bibliothèque…',
     },
   },
 } as const;

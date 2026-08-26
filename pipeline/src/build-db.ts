@@ -1,5 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
+import zlib from "node:zlib";
 import initSqlJs from "sql.js";
 import { APP_ASSETS_DB, DB_PATH, PARSED_PATH } from "./config.js";
 import type { ParsedBio } from "./parser.js";
@@ -105,8 +106,11 @@ async function main() {
     ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
   `;
 
-  const stmt = db.prepare(insertSql);
-  for (const r of rows) {
+/** Search window: full text would double DB size; leads+bodies up to 15k chars cover virtually every bio */
+const SEARCH_WINDOW = 15000;
+
+const stmt = db.prepare(insertSql);
+for (const r of rows) {
     stmt.run([
       r.slug,
       r.urlEn,
@@ -125,8 +129,8 @@ async function main() {
       r.htmlFr,
       r.biblioEn,
       r.biblioFr,
-      r.plainEn,
-      r.plainFr,
+      r.plainEn.slice(0, SEARCH_WINDOW),
+      r.plainFr.slice(0, SEARCH_WINDOW),
       r.citation,
     ]);
   }
@@ -171,11 +175,13 @@ async function main() {
   fs.writeFileSync(DB_PATH, Buffer.from(data));
 
   fs.mkdirSync(path.dirname(APP_ASSETS_DB), { recursive: true });
-  fs.copyFileSync(DB_PATH, APP_ASSETS_DB);
+  const gz = zlib.gzipSync(Buffer.from(data), { level: 9 });
+  fs.writeFileSync(APP_ASSETS_DB, gz);
 
   const sizeMb = (fs.statSync(DB_PATH).size / (1024 * 1024)).toFixed(1);
+  const gzMb = (gz.length / (1024 * 1024)).toFixed(1);
   console.log(
-    `Built ${rows.length} bios → ${DB_PATH} (${sizeMb} MB) and ${APP_ASSETS_DB}`
+    `Built ${rows.length} bios → ${DB_PATH} (${sizeMb} MB); bundled ${APP_ASSETS_DB} (${gzMb} MB)`
   );
   // silence unused
   void esc;

@@ -10,13 +10,20 @@ Daily Canadian biography reader. Content from the
 ## Quick start
 
 ```bash
-# sample data (already built: ~40 bios)
+# sample data (already built)
 cd app && npm start
 
-# full corpus (~9k bios, polite crawl ~5h)
+# full corpus (~9k bios, polite crawl ~1.5-5h depending on rate)
 cd pipeline && npm run all
-# then restart the app — bios.sqlite is copied into app/assets/
 ```
+
+The pipeline produces a ~384 MB SQLite DB, gzip-compressed to ~96 MB at
+`app/assets/bios.sqlite.gz` (tracked in git). On first launch the app
+streams it to device storage and decompresses in place — memory stays flat,
+and a version marker skips re-expansion until the bundle changes.
+
+Search covers names, teasers, and the first ~15k characters of each
+biography's text (per language) — full bodies remain intact for reading.
 
 ## Structure
 

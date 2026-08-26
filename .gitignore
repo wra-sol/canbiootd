@@ -12,5 +12,5 @@ app/ios/
 app/android/
 *.sqlite
 *.sqlite-journal
-*.sqlite.gz
+!app/assets/bios.sqlite.gz
 .clipboard
